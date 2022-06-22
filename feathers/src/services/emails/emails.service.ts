@@ -1,13 +1,13 @@
-// Initializes the `applications` service on path `/applications`
+// Initializes the `emails` service on path `/emails`
 import { ServiceAddons } from '@feathersjs/feathers';
 import { Application } from '../../declarations';
-import { Applications } from './applications.class';
-import hooks from './applications.hooks';
+import { Emails } from './emails.class';
+import hooks from './emails.hooks';
 
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    'applications': Applications & ServiceAddons<any>;
+    'emails': Emails & ServiceAddons<any>;
   }
 }
 
@@ -17,10 +17,10 @@ export default function (app: Application): void {
   };
 
   // Initialize our service with any options it requires
-  app.use('/applications', new Applications(options, app));
+  app.use('/emails', new Emails(options, app));
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('applications');
+  const service = app.service('emails');
 
   service.hooks(hooks);
 }

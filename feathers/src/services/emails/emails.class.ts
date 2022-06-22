@@ -5,7 +5,7 @@ interface Data {}
 
 interface ServiceOptions {}
 
-export class Applications implements ServiceMethods<Data> {
+export class Emails implements ServiceMethods<Data> {
   app: Application;
   options: ServiceOptions;
 
