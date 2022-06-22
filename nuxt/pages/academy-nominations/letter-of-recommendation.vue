@@ -69,6 +69,11 @@ export default {
       file: undefined,
     }
   },
+  created() {
+    if (this.$route.query.uac) {
+      this.code = this.$route.query.uac
+    }
+  },
 }
 </script>
 

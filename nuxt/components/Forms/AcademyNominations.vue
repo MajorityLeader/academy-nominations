@@ -935,13 +935,6 @@
 import axios from 'axios'
 export default {
   name: 'nominations',
-  head() {
-    return {
-      base: {
-        target: '_parent',
-      },
-    }
-  },
   data: () => ({
     valid: true,
     dobMenu: false,
@@ -1069,6 +1062,13 @@ export default {
       },
     },
   }),
+  head() {
+    return {
+      base: {
+        target: '_parent',
+      },
+    }
+  },
   watch: {
     dobMenu(val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
@@ -1081,7 +1081,7 @@ export default {
     save(date) {
       this.$refs.dobMenu.save(date)
     },
-    async formSubmit(e) {
+    async formSubmit() {
       if (!this.valid) {
         this.validate()
         this.submitStatus = 'ERROR'
@@ -1094,7 +1094,7 @@ export default {
           await axios.post('https://logger-kal2mblwyq-uk.a.run.app/event', {
             severity: 'INFO',
             project:
-              process.env.NODE_ENV == 'development' ? 'hoyer-dev' : 'hoyer',
+              process.env.NODE_ENV === 'development' ? 'hoyer-dev' : 'hoyer',
             message: 'Academy nomination submitted.',
             location: this.$route.fullPath,
             metaData: this.form,
@@ -1103,7 +1103,7 @@ export default {
           await axios.post('https://logger-kal2mblwyq-uk.a.run.app/event', {
             severity: 'ERROR',
             project:
-              process.env.NODE_ENV == 'development' ? 'hoyer-dev' : 'hoyer',
+              process.env.NODE_ENV === 'development' ? 'hoyer-dev' : 'hoyer',
             message: `Academy nomination failed. Error message from formproc: ${e.message}`,
             location: this.$route.fullPath,
             metaData: e,
