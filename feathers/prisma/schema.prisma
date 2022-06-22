@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Applications {
+  id         Int          @id @default(autoincrement()) @db.UnsignedInt
+  uac        String       @default("") @db.VarChar(13)
+  References References[]
+}
+
+model Recommendations {
+  id Int @id @default(autoincrement()) @db.UnsignedInt
+}
+
+model References {
+  id             Int          @id @default(autoincrement()) @db.UnsignedInt
+  application    Int          @db.UnsignedInt
+  onefirstName   String       @default("") @db.VarChar(255)
+  oneLastName    String       @default("") @db.VarChar(255)
+  oneEmail       String       @default("") @db.VarChar(255)
+  twoFirstName   String       @default("") @db.VarChar(255)
+  twoLastName    String       @default("") @db.VarChar(255)
+  twoEmail       String       @default("") @db.VarChar(255)
+  threeFirstName String       @default("") @db.VarChar(255)
+  threeLastName  String       @default("") @db.VarChar(255)
+  threeEmail     String       @default("") @db.VarChar(255)
+  Applications   Applications @relation(fields: [application], references: [id], onUpdate: Restrict, map: "References_ibfk_1")
+
+  @@index([application], map: "application")
+}

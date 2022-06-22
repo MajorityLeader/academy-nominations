@@ -1,10 +1,12 @@
 
+import uac from '../../hooks/uac';
+import emailAfterApplicationSubmission from '../../hooks/email-after-application-submission';
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [uac()],
     update: [],
     patch: [],
     remove: []
@@ -14,7 +16,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [emailAfterApplicationSubmission()],
     update: [],
     patch: [],
     remove: []

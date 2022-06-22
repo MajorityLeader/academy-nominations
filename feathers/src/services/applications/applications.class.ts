@@ -2,6 +2,8 @@ import { NotImplemented } from '@feathersjs/errors';
 import { Id, NullableId, Paginated, Params, ServiceMethods } from '@feathersjs/feathers';
 import { Application } from '../../declarations';
 
+import prisma from '../../prisma';
+
 interface Data {}
 
 interface ServiceOptions {}
@@ -27,7 +29,9 @@ export class Applications implements ServiceMethods<Data> {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async create (data: Data, params?: Params): Promise<Data> {
-    throw new NotImplemented;
+    return prisma.applications.create({
+      data
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
