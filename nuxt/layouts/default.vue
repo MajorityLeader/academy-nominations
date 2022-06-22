@@ -2,6 +2,14 @@
   <v-app light>
     <v-main>
       <v-container fluid>
+        <v-row justify="space-around" class="my-5">
+          <v-avatar>
+            <img
+              src="https://imageproxy-kal2mblwyq-ue.a.run.app/80/https://storage.googleapis.com/demcom-directory/seal.jpg"
+              alt="US House seal"
+            />
+          </v-avatar>
+        </v-row>
         <Nuxt />
       </v-container>
     </v-main>
@@ -10,7 +18,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       clipped: false,
       drawer: false,
@@ -19,19 +27,19 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Welcome',
-          to: '/'
+          to: '/',
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
-          to: '/inspire'
-        }
+          to: '/inspire',
+        },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'Vuetify.js',
     }
-  }
+  },
 }
 </script>

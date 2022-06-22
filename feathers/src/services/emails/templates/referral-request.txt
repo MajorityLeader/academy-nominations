@@ -1,0 +1,6 @@
+Hello {{reference.fullName}},
+
+{{application.fullname}} is requesting a letter of recommendation from you as part of their application for a nomination to one of the United
+States Service Academies.
+
+To assist {{application.fullname}} in completing their application please submit a letter of recommendation here: {{application.recommendationLink}}.
