@@ -1,15 +1,17 @@
 <template>
   <v-app light>
     <v-main>
+      <v-app-bar elevation="0">
+        <v-spacer></v-spacer>
+        <v-avatar>
+          <img
+            src="https://imageproxy-kal2mblwyq-ue.a.run.app/80/https://storage.googleapis.com/demcom-directory/seal.jpg"
+            alt="US House seal"
+          />
+        </v-avatar>
+        <v-spacer></v-spacer>
+      </v-app-bar>
       <v-container fluid>
-        <v-row justify="space-around" class="my-5">
-          <v-avatar>
-            <img
-              src="https://imageproxy-kal2mblwyq-ue.a.run.app/80/https://storage.googleapis.com/demcom-directory/seal.jpg"
-              alt="US House seal"
-            />
-          </v-avatar>
-        </v-row>
         <Nuxt />
       </v-container>
     </v-main>
