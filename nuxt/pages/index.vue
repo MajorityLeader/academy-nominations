@@ -1,3 +1,0 @@
-<template>
-<v-container />
-</template>
