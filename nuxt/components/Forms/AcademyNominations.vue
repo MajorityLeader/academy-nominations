@@ -900,25 +900,32 @@
             </v-row>
           </v-card-text>
         </v-card>
-        <div class="clearfix">&nbsp;</div>
-        <v-alert type="error" v-if="submitStatus === 'ERROR'">
-          Some required fields are missing or invalid. Please review the fields
-          marked in red above.
-        </v-alert>
-        <v-alert type="error" v-if="submitStatus === 'SUBMIT_ERROR'">
-          There was an error submitting the form. {{ message }}
-        </v-alert>
-        <v-btn
-          type="submit"
-          id="submitButton"
-          :disabled="submitStatus === 'PENDING'"
-          :loading="submitStatus === 'PENDING'"
-          @click="formSubmit()"
-          block
-          large
-          class="primary"
-          >Send Nomination Request</v-btn
-        >
+        <v-card transparent flat elevation="0">
+          <v-card-text>
+            <v-alert type="error" v-if="submitStatus === 'ERROR'">
+              Some required fields are missing or invalid. Please review the
+              fields marked in red above.
+            </v-alert>
+            <v-alert type="error" v-if="submitStatus === 'SUBMIT_ERROR'">
+              There was an error submitting the form. {{ message }}
+            </v-alert>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn
+              type="submit"
+              id="submitButton"
+              :disabled="submitStatus === 'PENDING'"
+              :loading="submitStatus === 'PENDING'"
+              @click="formSubmit()"
+              large
+              class="primary"
+              >Send Nomination Request</v-btn
+            >
+          </v-card-actions>
+        </v-card>
       </v-container>
     </v-form>
   </v-app>
