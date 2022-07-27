@@ -1,8 +1,10 @@
-FROM node:lts-alpine
+FROM node:14-alpine
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+
+RUN npm install -g @feathersjs/cli
 
 RUN npm install
 
