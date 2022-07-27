@@ -3,7 +3,7 @@ FROM node:lts-alpine
 WORKDIR /usr/src/app
 
 COPY package* ./
-RUN npm install --verbose
+RUN npm install
 
 EXPOSE 8000
 
