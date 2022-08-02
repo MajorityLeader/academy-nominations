@@ -2,13 +2,14 @@ version: "3"
 
 services:
   academy-nuxt:
-    build:
-      context: ./nuxt
-      dockerfile: Dockerfile
+    image: gcr.io/demcom/github.com/majorityleader/academy-nominations:9e8412a8e6ec7c50c45594844722544fb778409e
     container_name: academy-nuxt
     restart: always
     ports:
       - '8010:8000'
+    environment:
+      - VIRTUAL_HOST=academy.localhost
+      - VIRTUAL_HOST=8010
   academy-feathers:
     build:
       context: ./feathers
@@ -21,3 +22,8 @@ services:
       - ./feathers/.env
     volumes:
       - './files:/files'
+
+networks:
+  proxy:
+    name: proxy
+    external: true
