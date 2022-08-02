@@ -1,4 +1,6 @@
+import axios from "axios";
 import express, { Router, Request, Response } from "express";
+import fs from 'fs';
 import { validationResult, check } from 'express-validator';
 
 const router: Router = express.Router();
@@ -24,6 +26,9 @@ router.post('/',
     check('file-photo').exists().withMessage('photo file must be attached'),
     async (req: Request, res: Response) => {
     try {
+        // const {email: ['required-email']} = req.body;
+        fs.writeFileSync(`../files/applications/${req.body['required-email']}`, req.body);
+        // await axios.post('/htbin/formproc/nominations.txt&display=/academy-nominations-thank-you&nobase&fpGetVer=2', req.body)
         res.send('OK');
     } catch (e: any) {
         res.status(500).send(e.toString());

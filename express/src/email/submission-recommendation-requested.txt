@@ -1,0 +1,11 @@
+Greetings {{reference.name}},
+
+{{application.name}} has listed you as a reference in their Military Service Academy Application with Congressman Steny Hoyer (MD-05). To submit your letter of recommendation directly to the Rep. Hoyer, please visit xxxxxx and use code yyyyyyy.
+
+Please submit your letter by {{application.deadline}}.  Should you have any questions regarding this email, please contact Academy Coordinator, Stefanie Carey Barone, at 202-590-0093, or by email to: Stefanie.Carey@mail.house.gov.
+
+Thanking you for being a part of this process and with kindest regards.
+
+Sincerely yours,
+
+STENY H. HOYER

@@ -6,7 +6,7 @@
       autocomplete="on"
       method="post"
       @submit.prevent="formSubmit"
-      action="/htbin/formproc/nominations.txt&display=/academy-nominations-thank-you&nobase&fpGetVer=2"
+      action="http://localhost:3000/applications"
     >
       <v-container>
         <v-subheader>Fields marked with * are required.</v-subheader>

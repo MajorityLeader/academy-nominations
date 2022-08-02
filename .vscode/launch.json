@@ -19,5 +19,20 @@
       "type": "node",
       "cwd": "${workspaceFolder}/nuxt",
     },
+    {
+      "name": "express",
+      "request": "launch",
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "console": "integratedTerminal",
+      "type": "node",
+      "cwd": "${workspaceFolder}/express",
+    },
   ]
 }
