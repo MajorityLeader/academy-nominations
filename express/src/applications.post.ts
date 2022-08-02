@@ -1,14 +1,12 @@
 import express, { Router, Request, Response } from "express";
-import { validationResult, check, sanitize } from 'express-validator';
+import { validationResult, check } from 'express-validator';
 
 const router: Router = express.Router();
 router.post('/',
-    sanitize('required-email').normalizeEmail().trim(),
-    sanitize('required-dob').toDate(),
     check('required-FIRSTNAME', 'first name is required').exists(),
     check('required-LASTNAME').exists().withMessage('last name is required'),
-    check('required-email').isEmail().withMessage('email is not valid'),
-    check('required-dob').isDate().withMessage('date of birth must be a date'),
+    check('required-email').normalizeEmail().trim().isEmail().withMessage('email is not valid'),
+    check('required-dob').toDate().isDate().withMessage('date of birth must be a date'),
     check('required-pob').exists().withMessage('place of birth is required'),
     check('required-street').exists().withMessage('street address is required'),
     check('required-city').exists().withMessage('city is required'),
