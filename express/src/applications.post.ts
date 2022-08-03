@@ -3,15 +3,19 @@ import express, { Router, Request, Response } from 'express';
 import fs from 'fs';
 import { check } from 'express-validator';
 import { nanoid } from 'nanoid/async';
+import multer from 'multer';
+
+const upload = multer();
 
 const router: Router = express.Router();
 router.post(
   '/',
+  upload.none(),
   check('required-FIRSTNAME', 'first name is required').exists(),
   check('required-LASTNAME').exists().withMessage('last name is required'),
-  check('required-email').normalizeEmail().trim().isEmail()
+  check('required-email').isEmail().normalizeEmail().trim()
     .withMessage('email is not valid'),
-  check('required-dob').toDate().isDate().withMessage('date of birth must be a date'),
+  check('required-dob').isDate().withMessage('date of birth must be a date').toDate(),
   check('required-pob').exists().withMessage('place of birth is required'),
   check('required-street').exists().withMessage('street address is required'),
   check('required-city').exists().withMessage('city is required'),

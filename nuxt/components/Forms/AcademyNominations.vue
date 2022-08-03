@@ -27,8 +27,8 @@
                       I have read the Information Sheet on the
                       <a
                         target="_blank"
-                        @click.stop
                         href="/help/nominations-faq"
+                        @click.stop
                         >FAQ page</a
                       >
                       explaining the nominating procedure and am familiar with
@@ -55,8 +55,8 @@
             <v-row>
               <v-col cols="1">
                 <v-radio-group
-                  :mandatory="true"
                   v-model="form.permission.media"
+                  :mandatory="true"
                 >
                   <v-radio
                     label="Yes"
@@ -142,8 +142,8 @@
                       readonly
                       v-bind="attrs"
                       :rules="[rules.required()]"
-                      v-on="on"
                       name="required-dob"
+                      v-on="on"
                     ></v-text-field>
                   </template>
                   <v-date-picker
@@ -551,43 +551,43 @@
               </v-col>
               <v-col cols="12">
                 <v-textarea
-                  filled
-                  name="extra-clubs-info"
-                  label="Provide additional information for activities indicated above"
                   v-model="
                     form.educationEmployment.extraCurricularActivities
                       .additionalInfo
                   "
+                  filled
+                  name="extra-clubs-info"
+                  label="Provide additional information for activities indicated above"
                   placeholder="List the grade(s) for each activity you selected above. Please indicate if you hold a leadership role in any of the activities you list."
                   hint="List the grade(s) for each activity you selected above. Please indicate if you hold a leadership role in any of the activities you list."
                 ></v-textarea>
               </v-col>
               <v-col cols="12">
                 <v-textarea
-                  filled
-                  name="extra-clubs-sports"
-                  label="List any athletic participation"
                   v-model="
                     form.educationEmployment.extraCurricularActivities
                       .athleticParticipation
                   "
+                  filled
+                  name="extra-clubs-sports"
+                  label="List any athletic participation"
                   placeholder="For each, include the sport, whether you were varsity/JV, position, awards, letters, and grades."
                   hint="For each, include the sport, whether you were varsity/JV, position, awards, letters, and grades."
                 ></v-textarea>
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field
-                  name="employment-where"
                   v-model="form.educationEmployment.employment.where"
+                  name="employment-where"
                   label="If employed, where"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="3">
                 <v-text-field
-                  name="employment-hours-afterschool"
                   v-model="
                     form.educationEmployment.employment.hoursPerWeek.afterSchool
                   "
+                  name="employment-hours-afterschool"
                   label="How many hours per week after school"
                   type="number"
                 ></v-text-field>
@@ -622,10 +622,10 @@
             <v-row>
               <v-col cols="12" md="3">
                 <v-select
+                  v-model="form.academySelection.first"
                   label="First Choice*"
                   name="academy-selection-first"
                   :rules="[rules.required()]"
-                  v-model="form.academySelection.first"
                   :items="[
                     'US Air Force Academy',
                     'US Military Academy',
@@ -636,9 +636,9 @@
               </v-col>
               <v-col cols="12" md="3">
                 <v-select
+                  v-model="form.academySelection.second"
                   label="Second Choice"
                   name="academy-selection-second"
-                  v-model="form.academySelection.second"
                   :items="[
                     'US Air Force Academy',
                     'US Military Academy',
@@ -649,9 +649,9 @@
               </v-col>
               <v-col cols="12" md="3">
                 <v-select
+                  v-model="form.academySelection.third"
                   label="Third Choice"
                   name="academy-selection-third"
-                  v-model="form.academySelection.third"
                   :items="[
                     'US Air Force Academy',
                     'US Military Academy',
@@ -662,9 +662,9 @@
               </v-col>
               <v-col cols="12" md="3">
                 <v-select
+                  v-model="form.academySelection.fourth"
                   label="Fourth Choice"
                   name="academy-selection-fourth"
-                  v-model="form.academySelection.fourth"
                   :items="[
                     'US Air Force Academy',
                     'US Military Academy',
@@ -675,25 +675,25 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field
+                  v-model="form.academySelection.elsewhere"
                   name="academy-selection-elsewhere"
                   label="I am also seeking a nomination through"
-                  v-model="form.academySelection.elsewhere"
                 >
                 </v-text-field>
               </v-col>
               <v-col cols="12" md="8">
                 <v-text-field
+                  v-model="form.academySelection.previous.where"
                   name="academy-selection-previous-elsewhere"
                   label="I have previously sought a nomination through"
-                  v-model="form.academySelection.previous.where"
                 >
                 </v-text-field>
               </v-col>
               <v-col cols="12" md="4">
                 <v-text-field
+                  v-model="form.academySelection.previous.when"
                   label="When"
                   name="academy-selection-elsewhere-when"
-                  v-model="form.academySelection.previous.when"
                 >
                 </v-text-field>
               </v-col>
@@ -710,10 +710,10 @@
             <v-row>
               <v-col cols="12">
                 <v-radio-group
+                  v-model="lettersMethod"
                   :mandatory="true"
                   hint="If you choose 'Please contact my references', we will send an email to your references to solicit letters of recommendation from them directly"
                   persistent-hint
-                  v-model="lettersMethod"
                 >
                   <v-radio
                     label="I will attach my letters of recommendation here"
@@ -729,20 +729,20 @@
               </v-col>
               <v-col cols="12">
                 <v-file-input
+                  v-if="lettersMethod === 0"
+                  v-model="form.files.recommendation"
                   :rules="[rules.filesize()]"
                   name="file-recommendation"
                   accept=".pdf"
-                  v-model="form.files.recommendation"
-                  v-if="lettersMethod === 0"
                   hint="File must be in PDF format. Combine multiple files into a single PDF. 500kb max size."
                   persistent-hint
                   label="Three Letters of Recommendation"
                 ></v-file-input>
               </v-col>
-              <v-col cols="12" v-if="lettersMethod === 1">
+              <v-col v-if="lettersMethod === 1" cols="12">
                 <v-text-field
-                  name="reference1-firstname"
                   v-model="form.references.one.firstName"
+                  name="reference1-firstname"
                   validate-on-blur
                   :rules="[
                     () =>
@@ -753,8 +753,8 @@
                   label="Reference First Name"
                 ></v-text-field>
                 <v-text-field
-                  name="reference1-lastname"
                   v-model="form.references.one.lastName"
+                  name="reference1-lastname"
                   validate-on-blur
                   :rules="[
                     () =>
@@ -764,8 +764,8 @@
                   label="Reference Last Name"
                 ></v-text-field>
                 <v-text-field
-                  name="reference1-email"
                   v-model="form.references.one.email"
+                  name="reference1-email"
                   validate-on-blur
                   class="mb-8"
                   :rules="[
@@ -779,8 +779,8 @@
                 ></v-text-field>
 
                 <v-text-field
-                  name="reference2-firstname"
                   v-model="form.references.two.firstName"
+                  name="reference2-firstname"
                   validate-on-blur
                   :rules="[
                     () =>
@@ -791,8 +791,8 @@
                   label="Reference First Name"
                 ></v-text-field>
                 <v-text-field
-                  name="reference2-lastname"
                   v-model="form.references.two.lastName"
+                  name="reference2-lastname"
                   validate-on-blur
                   :rules="[
                     () =>
@@ -802,8 +802,8 @@
                   label="Reference Last Name"
                 ></v-text-field>
                 <v-text-field
-                  name="reference2-email"
                   v-model="form.references.two.email"
+                  name="reference2-email"
                   validate-on-blur
                   class="mb-8"
                   :rules="[
@@ -817,8 +817,8 @@
                 ></v-text-field>
 
                 <v-text-field
-                  name="reference3-firstname"
                   v-model="form.references.three.firstName"
+                  name="reference3-firstname"
                   validate-on-blur
                   :rules="[
                     () =>
@@ -829,8 +829,8 @@
                   label="Reference First Name"
                 ></v-text-field>
                 <v-text-field
-                  name="reference3-lastname"
                   v-model="form.references.three.lastName"
+                  name="reference3-lastname"
                   validate-on-blur
                   :rules="[
                     () =>
@@ -841,8 +841,8 @@
                   label="Reference Last Name"
                 ></v-text-field>
                 <v-text-field
-                  name="reference3-email"
                   v-model="form.references.three.email"
+                  name="reference3-email"
                   validate-on-blur
                   :rules="[
                     () =>
@@ -867,10 +867,10 @@
             <v-row>
               <v-col cols="12">
                 <v-file-input
+                  v-model="form.files.transcript"
                   name="file-transcript"
                   :rules="[rules.required(), rules.filesize()]"
                   accept=".pdf"
-                  v-model="form.files.transcript"
                   hint="File must be in PDF format. 500kb max size."
                   persistent-hint
                   label="Transcript of high school record, which includes junior year and class rank*"
@@ -878,10 +878,10 @@
               </v-col>
               <v-col cols="12">
                 <v-file-input
+                  v-model="form.files.essay"
                   name="file-essay"
                   :rules="[rules.required(), rules.filesize()]"
                   accept=".pdf"
-                  v-model="form.files.essay"
                   hint="File must be in PDF format. 500kb max size."
                   persistent-hint
                   label="Four Essays – Personal Testimonial*"
@@ -889,10 +889,10 @@
               </v-col>
               <v-col cols="12">
                 <v-file-input
+                  v-model="form.files.photo"
                   name="file-photo"
                   :rules="[rules.required(), rules.filesize()]"
                   accept="image/*"
-                  v-model="form.files.photo"
                   hint="File can be in any image format. 500kb max size."
                   persistent-hint
                   label="Recent photograph of applicant*"
@@ -903,11 +903,11 @@
         </v-card>
         <v-card transparent flat elevation="0">
           <v-card-text>
-            <v-alert type="error" v-if="submitStatus === 'ERROR'">
+            <v-alert v-if="submitStatus === 'ERROR'" type="error">
               Some required fields are missing or invalid. Please review the
               fields marked in red above.
             </v-alert>
-            <v-alert type="error" v-if="submitStatus === 'SUBMIT_ERROR'">
+            <v-alert v-if="submitStatus === 'SUBMIT_ERROR'" type="error">
               There was an error submitting the form. {{ message }}
             </v-alert>
           </v-card-text>
@@ -916,8 +916,8 @@
             <v-spacer></v-spacer>
 
             <v-btn
-              type="submit"
               id="submitButton"
+              type="submit"
               :disabled="submitStatus === 'PENDING'"
               :loading="submitStatus === 'PENDING'"
               large
