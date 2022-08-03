@@ -4,6 +4,9 @@
       ref="form"
       v-model="valid"
       autocomplete="on"
+      enctype="multipart/form-data"
+      action="http://localhost:3000/applications"
+      method="post"
       @submit.prevent="formSubmit"
     >
       <v-container>
@@ -929,9 +932,8 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
-  name: 'nominations',
+  name: 'Nominations',
   data: () => ({
     valid: true,
     dobMenu: false,
@@ -1078,19 +1080,19 @@ export default {
     save(date) {
       this.$refs.dobMenu.save(date)
     },
-    async formSubmit(event) {
-      console.debug(event)
-      const formData = await new FormData(event.target);
+    formSubmit() {
+      this.$refs.form.$el.submit()
+      
       // console.debug(formData)
-      try {
-        await axios.post('http://localhost:3000/applications', formData, {
-          header: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-      } catch {
-        this.submitStatus = 'SUBMIT_ERROR'
-      }
+      // try {
+      //   await axios.post('http://localhost:3000/applications', formData, {
+      //     header: {
+      //       'Content-Type': 'multipart/form-data'
+      //     }
+      //   })
+      // } catch {
+      //   this.submitStatus = 'SUBMIT_ERROR'
+      // }
       // if (!this.valid) {
       //   this.validate()
       //   this.submitStatus = 'ERROR'

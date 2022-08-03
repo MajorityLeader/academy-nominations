@@ -35,7 +35,7 @@ router.post(
     try {
       const id = await nanoid(10);
       const data = { id, ...req.body };
-      fs.writeFileSync(`../files/applications/${id}.${req.body['required-email']}`, data);
+      fs.writeFileSync(`../files/applications/${id}.${req.body['required-email']}.json`, JSON.stringify(data));
       //   await axios.post('/htbin/formproc/nominations.txt&display=/academy-nominations-thank-you&nobase&fpGetVer=2', req.body);
       res.send('OK');
     } catch (e: any) {
