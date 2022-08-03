@@ -1,12 +1,10 @@
 <template>
   <v-app id="inspire">
     <v-form
-      v-model="valid"
       ref="form"
+      v-model="valid"
       autocomplete="on"
-      method="post"
       @submit.prevent="formSubmit"
-      action="http://localhost:3000/applications"
     >
       <v-container>
         <v-subheader>Fields marked with * are required.</v-subheader>
@@ -919,7 +917,6 @@
               id="submitButton"
               :disabled="submitStatus === 'PENDING'"
               :loading="submitStatus === 'PENDING'"
-              @click="formSubmit()"
               large
               class="primary"
               >Send Nomination Request</v-btn
@@ -1081,38 +1078,39 @@ export default {
     save(date) {
       this.$refs.dobMenu.save(date)
     },
-    async formSubmit() {
-      if (!this.valid) {
-        this.validate()
-        this.submitStatus = 'ERROR'
-        setTimeout(() => {
-          this.submitStatus = 'OK'
-        }, 5000)
-      } else {
-        this.submitStatus = 'PENDING'
-        try {
-          await axios.post('https://logger-kal2mblwyq-uk.a.run.app/event', {
-            severity: 'INFO',
-            project:
-              process.env.NODE_ENV === 'development' ? 'hoyer-dev' : 'hoyer',
-            message: 'Academy nomination submitted.',
-            location: this.$route.fullPath,
-            metaData: this.form,
-          })
-        } catch (e) {
-          await axios.post('https://logger-kal2mblwyq-uk.a.run.app/event', {
-            severity: 'ERROR',
-            project:
-              process.env.NODE_ENV === 'development' ? 'hoyer-dev' : 'hoyer',
-            message: `Academy nomination failed. Error message from formproc: ${e.message}`,
-            location: this.$route.fullPath,
-            metaData: e,
-          })
-          this.submitStatus = 'SUBMIT_ERROR'
-        } finally {
-          this.$refs.form.$el.submit()
-        }
+    async formSubmit(event) {
+      console.debug(event)
+      const formData = await new FormData(event.target);
+      // console.debug(formData)
+      try {
+        await axios.post('http://localhost:3000/applications', formData, {
+          header: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+      } catch {
+        this.submitStatus = 'SUBMIT_ERROR'
       }
+      // if (!this.valid) {
+      //   this.validate()
+      //   this.submitStatus = 'ERROR'
+      //   setTimeout(() => {
+      //     this.submitStatus = 'OK'
+      //   }, 5000)
+      // } else {
+      //   this.submitStatus = 'PENDING'
+      //   const data = formData
+      //   console.debug(data)
+      //   try {
+      //     await axios.post('http://localhost:3000/applications', data, {
+      //       header: {
+      //         'Content-Type': 'multipart/form-data'
+      //       }
+      //     })
+      //   } catch {
+      //     this.submitStatus = 'SUBMIT_ERROR'
+      //   }
+      // }
     },
   },
 }

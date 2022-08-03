@@ -1,21 +1,6 @@
-"Greetings,
+This is a confirmation of your academy nomination application to {{application.office}}.
 
- 
+If you have any questions, please contact {{application.contactName}} at {{application.contactInfo}}.
 
-John Doe has listed you as a reference in his Military Service Academy Application with Congressman Steny Hoyer (MD-05). To submit your letter of recommendation directly to the Rep. Hoyer, please visit xxxxxx and use code yyyyyyy.
-
- 
-
-Please submit your letter by October 12, 2022.  Should you have any questions regarding this email, please contact Academy Coordinator, Stefanie Carey Barone, at 202-590-0093, or by email to: Stefanie.Carey@mail.house.gov.
-
- 
-
-Thanking you for being a part of this process and with kindest regards, I am
-
- 
-
-Sincerely yours,
-
- 
-
-STENY H. HOYER”
+Best of luck,
+{{application.officeFullName}}

@@ -7,3 +7,6 @@ Academy nominations form submission handling frontend and backend.
 * /graph - graphql implementation of backend API
 * /nuxt - frontend
 * /prisma - shared database typescript schema
+
+## Installation instructions
+```docker-compose up```

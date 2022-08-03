@@ -2,6 +2,7 @@ import axios from "axios";
 import express, { Router, Request, Response } from "express";
 import fs from 'fs';
 import { validationResult, check } from 'express-validator';
+import { nanoid } from 'nanoid/async';
 
 const router: Router = express.Router();
 router.post('/',
@@ -26,8 +27,11 @@ router.post('/',
     check('file-photo').exists().withMessage('photo file must be attached'),
     async (req: Request, res: Response) => {
     try {
-        // const {email: ['required-email']} = req.body;
-        fs.writeFileSync(`../files/applications/${req.body['required-email']}`, req.body);
+        const id = await nanoid(10)
+        const data = Object.assign({
+            id
+        }, req.body)
+        fs.writeFileSync(`../files/applications/${id}.${req.body['required-email']}`, data);
         // await axios.post('/htbin/formproc/nominations.txt&display=/academy-nominations-thank-you&nobase&fpGetVer=2', req.body)
         res.send('OK');
     } catch (e: any) {
