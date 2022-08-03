@@ -1,5 +1,5 @@
-import express, { Request, Response } from "express";
-import bodyParser from "body-parser";
+import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
 import applications from './applications.post';
 
 const app = express();
@@ -14,5 +14,5 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/applications', applications);
 
 app.listen(3000, () => {
-    console.log("🎖️ Academy Nominations API running on port 3000\n");
+  console.log('🎖️ Academy Nominations API running on port 3000\n');
 });
