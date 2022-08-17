@@ -3,15 +3,14 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - academy-nominations',
-    title: 'academy-nominations',
+    title: 'US Service Academies Nomination Application Form',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: 'US Service Academy Nomination form to help you expedite your application.' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
@@ -45,7 +44,12 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:3000',
+    proxy: {
+      '/api/': { target: 'http://localhost:3000', pathRewrite: {'^/api/': ''} }
+    }
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
