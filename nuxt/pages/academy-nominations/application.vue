@@ -12,7 +12,7 @@
         Honorable Steny H. Hoyer (MD-05)
       </h2>
     </v-container>
-    <!-- <FormsAcademyNominations /> -->
+      <FormsRegister />
   </div>
 </template>
 
