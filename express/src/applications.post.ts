@@ -1,19 +1,22 @@
 // import axios from 'axios';
 import express, { Router, Request, Response } from 'express';
 import fs from 'fs';
+import path from 'path';
 import { check } from 'express-validator';
 import { customAlphabet } from 'nanoid';
 import { alphanumeric } from 'nanoid-dictionary';
 import multer from 'multer';
+import sendMail from './email/recommendation-request';
 
 const nanoid = customAlphabet(alphanumeric, 10);
 
 const upload = multer();
 
 const router: Router = express.Router();
+
 router.post(
   '/',
-  upload.none(),
+  upload.fields([{ name: 'file-recommendation', maxCount: 1 }, { name: 'file-transcript', maxCount: 1 }, { name: 'file-essay', maxCount: 1 }, { name: 'file-photo', maxCount: 1 }]),
   check('required-FIRSTNAME', 'first name is required').exists(),
   check('required-LASTNAME').exists().withMessage('last name is required'),
   check('required-email').isEmail().normalizeEmail().trim()
@@ -42,7 +45,33 @@ router.post(
     try {
       const id = nanoid();
       const data = { id, ...req.body };
-      fs.writeFileSync(`../files/applications/${id}.json`, JSON.stringify(data));
+      // Save files locally
+      const filePath = `../files/applications/${id}-${data['required-email']}/application.json`;
+      const dirname = path.dirname(filePath);
+      if (!fs.existsSync(dirname)) {
+        fs.mkdirSync(dirname);
+      }
+      fs.writeFileSync(filePath, JSON.stringify(data));
+      // Send recommendation request
+      await sendMail({
+        referenceName: 'Shaun Brown',
+        referenceEmail: 'shaunjason@gmail.com',
+        referenceLink: `http://localhost:3000/${id}`,
+        applicationName: 'Shaun Brown',
+        applicationDeadline: 'October 11, 2022',
+        applicationCode: id,
+      });
+      // const { files } = req;
+      // if (files['file-essay'].length) {
+      //   fs.writeFileSync(`../files/applications/${id}-${data['required-email']}/attachments/transcript.json`, JSON.stringify(data));
+      // }
+      // if (req.files['file-essay'].length) {
+      //   fs.writeFileSync(`../files/applications/${id}-${data['required-email']}/attachments/essay.json`, JSON.stringify(data));
+      // }
+      // if (req.files['file-photo'].length) {
+      //   fs.writeFileSync(`../files/applications/${id}-${data['required-email']}/attachments/photo.json`, JSON.stringify(data));
+      // }
+      // Fire off email for recommendations request
       //   await axios.post('/htbin/formproc/nominations.txt&display=/academy-nominations-thank-you&nobase&fpGetVer=2', req.body);
       res.send('OK');
     } catch (e: any) {

@@ -19,11 +19,11 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendMail = async (data: Data) => {
-  const parmFile = fs.readFileSync(path.resolve('src/email/recommendation.request.txt'), 'utf-8');
+  const parmFile = fs.readFileSync(path.resolve('src/email/recommendation-request.txt'), 'utf-8');
   const template = handlebars.compile(parmFile);
   const text = template(data);
   await transporter.sendMail({
-    from: '"DemCom Directory" <demcom@mail.house.gov>',
+    from: '"Steny Hoyer" <hoyer@mail.house.gov>',
     to: `${data.referenceName} <${data.referenceEmail}`,
     subject: `${data.applicationName} is requesting a reference from you`,
     text,
