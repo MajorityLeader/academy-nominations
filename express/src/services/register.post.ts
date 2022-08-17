@@ -2,24 +2,38 @@ import express, {
   Router, Request, Response,
 } from 'express';
 import { check, validationResult } from 'express-validator';
+import fs from 'fs';
+import path from 'path';
+import handlebars from 'handlebars';
 import nanoid from '../nanoid';
 import prisma from '../prisma';
+import nodemailer from '../nodemailer';
 
 const router: Router = express.Router();
 
 type Registration = {
   id: String,
   email: String
+  link?: String
 }
 
-const sendRegistrationEmail = (data: Registration) => {
-  console.log(data.email);
-  console.log('bar');
+const sendRegistrationEmail = async (registration: Registration) => {
+  const data = { ...registration };
+  data.link = `${process.env.WEBSITE_URL}/academy-nominations/application/form?a=${data.id}`;
+  const parmFile = fs.readFileSync(path.resolve('src/email/register.txt'), 'utf-8');
+  const template = handlebars.compile(parmFile, { noEscape: true });
+  const text = template(data);
+  await nodemailer.sendMail({
+    from: '"Steny Hoyer" <hoyer@mail.house.gov>',
+    to: `${data.email}`,
+    subject: 'Your unique US Service Academy Nominations Application link',
+    text,
+  });
 };
 
 router.post(
   '/',
-  check('email', 'That email does not appear valid.').isEmail(),
+  check('email', 'That email does not appear valid.').trim().normalizeEmail({ all_lowercase: true }).isEmail(),
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -40,8 +54,7 @@ router.post(
       sendRegistrationEmail(data);
       return res.status(200);
     } catch (e) {
-      if (e.code === 'P2002') {
-        // An application has already been started with that email address. Simply resend email.
+      if (e.code === 'P2002') { // An application has already been started with that email address. Simply resend registration email.
         const data = await prisma.academyNominations.findFirst({
           where: {
             email: req.body.email,
