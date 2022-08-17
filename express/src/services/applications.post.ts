@@ -6,7 +6,7 @@ import { check } from 'express-validator';
 import { customAlphabet } from 'nanoid';
 import { alphanumeric } from 'nanoid-dictionary';
 import multer from 'multer';
-import sendMail from './email/recommendation-request';
+import sendMail from '../email/recommendation-request';
 
 const nanoid = customAlphabet(alphanumeric, 10);
 

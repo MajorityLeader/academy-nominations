@@ -1,5 +1,5 @@
 <template>
-  <v-form>
+  <v-form ref="form" @submit.prevent>
     <v-container>
       <v-card outlined class="mb-10">
         <v-card-title>
@@ -8,7 +8,7 @@
           </v-avatar>Start a new application
         </v-card-title>
         <v-card-text>
-          <v-text-field outlined label="Email address"></v-text-field>
+          <v-text-field outlined label="Email address" v-model="form.email" :rules="[rules.required()]"></v-text-field>
         </v-card-text>
       </v-card>
       <v-card outlined>
@@ -59,7 +59,7 @@
                 provide my name to any local media who may be interested in
                 contacting me upon the publication of my name in local
                 newspapers if I receive a nomination and/or appointment to a
-                U.S. Service Academy
+                U.S. Service Academy. (optional)
               </div>
             </v-col>
           </v-row>
@@ -68,19 +68,14 @@
 
       <v-card transparent flat elevation="0">
         <v-card-text>
-          <v-alert v-if="submitStatus === 'ERROR'" type="error">
-            Some required fields are missing or invalid. Please review the
-            fields marked in red above.
-          </v-alert>
-          <v-alert v-if="submitStatus === 'SUBMIT_ERROR'" type="error">
+          <v-alert v-if="error.status === 'ERROR'" type="error">
             There was an error submitting the form. {{ message }}
           </v-alert>
         </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn id="submitButton" type="submit" :disabled="submitStatus === 'PENDING'"
-            :loading="submitStatus === 'PENDING'" large class="primary">Next</v-btn>
+          <v-btn id="submitButton" @click="submitForm" :loading="loading" large class="primary">Next</v-btn>
         </v-card-actions>
       </v-card>
     </v-container>
@@ -92,41 +87,39 @@ export default {
   name: 'Register',
   data: () => ({
     valid: true,
-    dobMenu: false,
+    loading: false,
+    error: {
+      status: null,
+      message: null
+    },
     form: {
       email: null,
       permission: {
         media: true,
       },
     },
-    lettersMethod: 0,
-    message: 'That is all we know. Please try again.',
-    submitStatus: null,
     rules: {
       required: () => {
         return (v) => !!v || `This is required`
-      },
-      filesize: () => {
-        return (value) =>
-          !value ||
-          value.size < 500000 ||
-          'File size should be less than 500 KB!'
-      },
-      email: () => {
-        return (v) => /.+@.+/.test(v) || 'E-mail must be valid'
-      },
-      maxLength: (field, length) => {
-        return (v) =>
-          (v && v.length <= length) ||
-          `${field} must be less than ${length} characters`
-      },
-      exactLength: (field, length) => {
-        return (v) =>
-          (v && v.length === length) ||
-          `${field} must be exactly ${length} characters`
-      },
+      }
     },
   }),
+  methods: {
+    async submitForm() {
+      this.loading = true
+      this.$refs.form.validate()
+      try {
+        await this.$axios.$post(`/register`, this.form)
+      }
+      catch (e) {
+        this.error.status = "ERROR"
+        this.error.message = e.message
+        console.error(e)
+      } finally {
+        this.loading = false
+      }
+    }
+  }
 }
 </script>
 

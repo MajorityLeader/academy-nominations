@@ -1,6 +1,5 @@
 <template>
   <v-app id="inspire">
-    
     <v-form
       ref="form"
       v-model="valid"
