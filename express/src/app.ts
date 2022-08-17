@@ -1,8 +1,9 @@
 import express, { Request, Response } from 'express';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import bodyParser from 'body-parser';
-import applications from './applications.post';
-import register from './register.post';
+
+import applications from './services/applications.post';
+import register from './services/register.post';
 
 const app = express();
 

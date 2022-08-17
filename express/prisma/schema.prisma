@@ -39,7 +39,7 @@ model AcademyNominations {
   employedWhere                     String?                                  @db.VarChar(255)
   employedHoursAfterSchool          Int?
   employedHoursDuringSummer         Int?
-  academySelectFirst                AcademyNominations_academySelectFirst
+  academySelectFirst                AcademyNominations_academySelectFirst?
   academySelectSecond               AcademyNominations_academySelectSecond?
   academySelectThird                AcademyNominations_academySelectThird?
   academySelectFourth               AcademyNominations_academySelectFourth?
