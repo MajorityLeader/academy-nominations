@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="step === 1">
+    <div v-if="!$route.query.a">
       <FormsRegister />
     </div>
   </div>
@@ -12,15 +12,12 @@ export default ({
   data() {
     return {
       form: {},
-      step: 0
     }
   },
   async mounted() {
-    if (!this.$route.query.a) {
-      this.step = 1
-    } else {
+    if (this.$route.query.a) {
       this.form = await this.$axios.$get(`/api/applications/${this.$route.query.a}`);
-      if (!this.form.firstName || !this.form.lastName || !this.form.birthday || !this.form.birthplace || !this.form.fatherName) {
+      if (!this.form.firstName || !this.form.lastName || !this.form.birthDate || !this.form.birthPlace || !this.form.fatherName) {
         this.$router.replace(`/application/personal?a=${this.$route.query.a}`)
       }
     }
