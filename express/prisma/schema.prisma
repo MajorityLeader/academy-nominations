@@ -8,29 +8,29 @@ datasource db {
 }
 
 model AcademyNominations {
-  id                                String                                   @id @default("") @db.VarChar(11)
+  id                                String                                   @id @default("") @db.VarChar(255)
   email                             String                                   @unique(map: "EmailUnique") @default("") @db.VarChar(255)
-  firstName                         String?                                  @default("") @db.VarChar(50)
+  firstName                         String?                                  @db.VarChar(50)
   middleName                        String?                                  @db.VarChar(50)
-  lastName                          String?                                  @default("") @db.VarChar(50)
-  birthday                          DateTime?                                @db.Date
-  birthPlace                        String?                                  @default("") @db.VarChar(255)
+  lastName                          String?                                  @db.VarChar(50)
+  birthDate                         DateTime?                                @db.Date
+  birthPlace                        String?                                  @db.VarChar(255)
   fatherName                        String?                                  @db.VarChar(100)
   fatherOccupation                  String?                                  @db.VarChar(255)
   motherName                        String?                                  @db.VarChar(100)
   motherOccupation                  String?                                  @db.VarChar(255)
-  addressStreet                     String?                                  @default("") @db.VarChar(255)
-  addressCity                       String?                                  @default("") @db.VarChar(255)
-  addressState                      String?                                  @default("") @db.VarChar(2)
-  addressZip                        String?                                  @default("") @db.VarChar(5)
-  addressPhone                      String?                                  @default("") @db.VarChar(50)
+  addressStreet                     String?                                  @db.VarChar(255)
+  addressCity                       String?                                  @db.VarChar(255)
+  addressState                      String?                                  @db.VarChar(2)
+  addressZip                        String?                                  @db.VarChar(5)
+  addressPhone                      String?                                  @db.VarChar(50)
   tempStreet                        String?                                  @db.VarChar(255)
   tempCity                          String?                                  @db.VarChar(255)
   tempState                         String?                                  @db.VarChar(2)
   tempZip                           String?                                  @db.VarChar(5)
   tempPhone                         String?                                  @db.VarChar(50)
   tempValidUntil                    String?                                  @db.VarChar(255)
-  highSchool                        String?                                  @default("") @db.VarChar(255)
+  highSchool                        String?                                  @db.VarChar(255)
   yearOfGraduation                  Int?
   college                           String?                                  @db.VarChar(255)
   yearsCompleted                    Int?
@@ -43,7 +43,7 @@ model AcademyNominations {
   academySelectSecond               AcademyNominations_academySelectSecond?
   academySelectThird                AcademyNominations_academySelectThird?
   academySelectFourth               AcademyNominations_academySelectFourth?
-  academySelectionElsewhere         String?                                  @default("") @db.VarChar(255)
+  academySelectionElsewhere         String?                                  @db.VarChar(255)
   academySelectionPreviousElsewhere String?                                  @db.VarChar(255)
   academySelectionPreviouslyWhen    String?                                  @db.VarChar(50)
   permissionMedia                   Boolean?
