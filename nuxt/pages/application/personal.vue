@@ -31,7 +31,7 @@
                       :rules="[rules.required()]" name="required-dob" v-on="on"></v-text-field>
                   </template>
                   <v-date-picker ref="picker" v-model="form.birthDate" :max="new Date().toISOString().substr(0, 10)"
-                    min="1950-01-01" @change="save"></v-date-picker>
+                    min="1950-01-01"></v-date-picker>
                 </v-menu>
               </v-col>
               <v-col cols="12" md="8">
@@ -133,7 +133,7 @@
           <v-card-actions>
             <v-btn large outlined color="primary">Back</v-btn>
             <v-spacer></v-spacer>
-            <v-btn :loading="loading" large outlined color="primary">Save</v-btn>
+            <v-btn @click="save" large outlined color="primary">Save</v-btn>
             <v-btn id="submitButton" type="submit" :loading="loading" large class="primary">Next</v-btn>
           </v-card-actions>
         </v-card>
@@ -143,9 +143,11 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 export default ({
   data() {
     return {
+      dobMenu: false,
       valid: false,
       loading: false,
       error: {
@@ -186,10 +188,17 @@ export default ({
       },
     }
   },
-  async $fetch() {
-    this.form = await this.$axios.$get(`/api/applications/${this.$route.query.a}`);
+  async mounted() {
+    console.log('fetched')
+    const data = await this.$axios.$get(`/api/applications/${this.$route.query.a}`);
+    data.birthDate = data.birthDate ? dayjs(data.birthDate).format('MM-DD-YYYY') : null
+    data.tempValidUntil = data.tempValidUntil ? dayjs(data.tempValidUntil).format('MM-DD-YYYY') : null
+    this.form = data
   },
   methods: {
+    async save() {
+      await this.$axios.$patch(`/api/applications/personal/${this.$route.query.a}`, this.form)
+    },
     async submitForm() {
       await this.$axios.$patch(`/api/applications/personal/${this.$route.query.a}`, this.form)
       this.$router.push(`/application/education?a=${this.$route.query.a}`)
