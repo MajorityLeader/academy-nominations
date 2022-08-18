@@ -17,7 +17,14 @@ const router: Router = express.Router();
 
 router.get(
   '/:id',
-  async (req: Request, res: Response) => res.json(await prisma.academyNominations.findFirst({ where: { id: req.params.id } })),
+  async (req: Request, res: Response) => {
+    const data = await prisma.academyNominations.findFirst({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.json(data);
+  },
 );
 
 router.patch(
