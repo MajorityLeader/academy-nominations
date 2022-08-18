@@ -23,7 +23,7 @@ const sendRegistrationEmail = async (registration: Registration) => {
   const parmFile = fs.readFileSync(path.resolve('src/email/register.txt'), 'utf-8');
   const template = handlebars.compile(parmFile, { noEscape: true });
   const text = template(data);
-  await nodemailer.sendMail({
+  return nodemailer.sendMail({
     from: '"Steny Hoyer" <hoyer@mail.house.gov>',
     to: `${data.email}`,
     subject: 'Your unique US Service Academy Nominations Application link',
@@ -52,7 +52,7 @@ router.post(
         },
       });
       sendRegistrationEmail(data);
-      return res.status(200);
+      return res.status(200).json({});
     } catch (e) {
       if (e.code === 'P2002') { // An application has already been started with that email address. Simply resend registration email.
         const data = await prisma.academyNominations.findFirst({
@@ -65,9 +65,9 @@ router.post(
           },
         });
         sendRegistrationEmail(data);
-        return res.status(200);
+        return res.status(200).json({});
       }
-      return res.status(400);
+      return res.status(400).json({});
     }
   },
 );
