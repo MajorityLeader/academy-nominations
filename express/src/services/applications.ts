@@ -20,20 +20,32 @@ router.get(
   async (req: Request, res: Response) => res.json(await prisma.academyNominations.findFirst({ where: { id: req.params.id } })),
 );
 
+router.patch(
+  '/personal/:id',
+  check('firstName', 'first name is required').exists(),
+  check('lastName').exists().withMessage('last name is required'),
+  check('birthDate').isDate().withMessage('date of birth must be a date').toDate(),
+  check('birthPlace').exists().withMessage('place of birth is required'),
+  check('addressStreet').exists().withMessage('street address is required'),
+  check('addressCity').exists().withMessage('city is required'),
+  check('addressState').exists().withMessage('state is required'),
+  check('addressZipcode').exists().withMessage('postal code is required'),
+  check('addressZipCode').isPostalCode('US').withMessage('postal code does not seem valid'),
+  check('addressPhone').isMobilePhone('any').withMessage('not a valid phone number'),
+  async (req: Request, res: Response) => {
+    const record = await prisma.academyNominations.update({
+      where: {
+        id: req.params.id,
+      },
+      data: req.body,
+    });
+    res.json(record);
+  },
+);
+
 router.post(
   '/',
   upload.fields([{ name: 'file-recommendation', maxCount: 1 }, { name: 'file-transcript', maxCount: 1 }, { name: 'file-essay', maxCount: 1 }, { name: 'file-photo', maxCount: 1 }]),
-  check('required-FIRSTNAME', 'first name is required').exists(),
-  check('required-LASTNAME').exists().withMessage('last name is required'),
-  check('required-email').isEmail().normalizeEmail().trim()
-    .withMessage('email is not valid'),
-  check('required-dob').isDate().withMessage('date of birth must be a date').toDate(),
-  check('required-pob').exists().withMessage('place of birth is required'),
-  check('required-street').exists().withMessage('street address is required'),
-  check('required-city').exists().withMessage('city is required'),
-  check('required-state').exists().withMessage('state is required'),
-  check('required-zipcode').exists().withMessage('postal code is required').isPostalCode('US')
-    .withMessage('not a valid US postal code'),
   check('required-phone').isMobilePhone('any').withMessage('not a valid phone number'),
   check('required-highschool-location').exists().withMessage('high school is required'),
   check('required-highschool-graduation').exists().withMessage('high school year of graduation required').isNumeric()

@@ -19,7 +19,7 @@ type Registration = {
 
 const sendRegistrationEmail = async (registration: Registration) => {
   const data = { ...registration };
-  data.link = `${process.env.WEBSITE_URL}/academy-nominations/application/form?a=${data.id}`;
+  data.link = `${process.env.WEBSITE_URL}/application?a=${data.id}`;
   const parmFile = fs.readFileSync(path.resolve('src/email/register.txt'), 'utf-8');
   const template = handlebars.compile(parmFile, { noEscape: true });
   const text = template(data);

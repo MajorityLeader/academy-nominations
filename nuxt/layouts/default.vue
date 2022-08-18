@@ -1,7 +1,7 @@
 <template>
   <v-app light>
     <v-main>
-      <v-app-bar elevation="0">
+      <v-app-bar elevation="0" height="80">
         <v-spacer></v-spacer>
         <v-avatar>
           <img
@@ -12,6 +12,15 @@
         <v-spacer></v-spacer>
       </v-app-bar>
       <v-container fluid>
+            <v-container>
+      <h1 class="my-0 text-center" style="font-family: serif">
+        US Service Academies Nomination Application Form
+      </h1>
+      <h2 class="text-center mb-0"
+        style="font-family: serif">
+        Honorable Steny H. Hoyer (MD-05)
+      </h2>
+    </v-container>
         <Nuxt />
       </v-container>
     </v-main>
