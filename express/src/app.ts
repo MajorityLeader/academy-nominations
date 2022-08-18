@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import bodyParser from 'body-parser';
 
-import applications from './services/applications.post';
+import applications from './services/applications';
 import register from './services/register.post';
 
 const app = express();

@@ -7,12 +7,18 @@ import { customAlphabet } from 'nanoid';
 import { alphanumeric } from 'nanoid-dictionary';
 import multer from 'multer';
 import sendMail from '../email/recommendation-request';
+import prisma from '../prisma';
 
 const nanoid = customAlphabet(alphanumeric, 10);
 
 const upload = multer();
 
 const router: Router = express.Router();
+
+router.get(
+  '/:id',
+  async (req: Request, res: Response) => res.json(await prisma.academyNominations.findFirst({ where: { id: req.params.id } })),
+);
 
 router.post(
   '/',
