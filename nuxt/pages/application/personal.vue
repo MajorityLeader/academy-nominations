@@ -2,6 +2,7 @@
   <div>
     <v-form ref="form" @submit.prevent="submitForm">
       <v-container>
+        <Stepper :step="1"></Stepper>
         <v-card class="mb-10">
           <v-card-title>
             <v-avatar color="primary" class="mr-5" dark size="20">
@@ -131,7 +132,7 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-btn large outlined color="primary">Back</v-btn>
+            <v-btn @click="back" large outlined color="primary">Back</v-btn>
             <v-spacer></v-spacer>
             <v-btn @click="save" large outlined color="primary">Save</v-btn>
             <v-btn id="submitButton" type="submit" :loading="loading" large class="primary">Next</v-btn>
@@ -196,6 +197,10 @@ export default ({
     this.form = data
   },
   methods: {
+    async back() {
+      await this.$axios.$patch(`/api/applications/personal/${this.$route.query.a}`, this.form)
+      this.$router.replace(`/application?a=${this.$route.query.a}`)
+    },
     async save() {
       await this.$axios.$patch(`/api/applications/personal/${this.$route.query.a}`, this.form)
     },
