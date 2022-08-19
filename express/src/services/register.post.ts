@@ -19,7 +19,7 @@ type Registration = {
 
 const sendRegistrationEmail = async (registration: Registration) => {
   const data = { ...registration };
-  data.link = `${process.env.WEBSITE_URL}/application?a=${data.id}`;
+  data.link = `${process.env.WEBSITE_URL}/application/contact?a=${data.id}`;
   const parmFile = fs.readFileSync(path.resolve('src/email/register.txt'), 'utf-8');
   const template = handlebars.compile(parmFile, { noEscape: true });
   const text = template(data);
@@ -41,7 +41,7 @@ router.post(
     }
     const id = nanoid();
     try {
-      const data = await prisma.academyNominations.create({
+      const data = await prisma.application.create({
         data: {
           id,
           email: req.body.email,
@@ -55,7 +55,7 @@ router.post(
       return res.status(200).json({});
     } catch (e) {
       if (e.code === 'P2002') { // An application has already been started with that email address. Simply resend registration email.
-        const data = await prisma.academyNominations.findFirst({
+        const data = await prisma.application.findFirst({
           where: {
             email: req.body.email,
           },

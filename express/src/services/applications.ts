@@ -18,35 +18,12 @@ const router: Router = express.Router();
 router.get(
   '/:id',
   async (req: Request, res: Response) => {
-    const data = await prisma.academyNominations.findFirst({
+    const data = await prisma.application.findFirst({
       where: {
         id: req.params.id,
       },
     });
     res.json(data);
-  },
-);
-
-router.patch(
-  '/personal/:id',
-  check('firstName', 'first name is required').exists(),
-  check('lastName').exists().withMessage('last name is required'),
-  check('birthDate').isDate().withMessage('date of birth must be a date').toDate(),
-  check('birthPlace').exists().withMessage('place of birth is required'),
-  check('addressStreet').exists().withMessage('street address is required'),
-  check('addressCity').exists().withMessage('city is required'),
-  check('addressState').exists().withMessage('state is required'),
-  check('addressZipcode').exists().withMessage('postal code is required'),
-  check('addressZipCode').isPostalCode('US').withMessage('postal code does not seem valid'),
-  check('addressPhone').isMobilePhone('any').withMessage('not a valid phone number'),
-  async (req: Request, res: Response) => {
-    const record = await prisma.academyNominations.update({
-      where: {
-        id: req.params.id,
-      },
-      data: req.body,
-    });
-    res.json(record);
   },
 );
 
@@ -58,7 +35,25 @@ router.patch(
   check('employedHoursAfterSchool').toInt().isNumeric().withMessage('after school hours should be numeric'),
   check('employedHoursDuringSummer').toInt().isNumeric().withMessage('summer employment hours shoudl be numeric'),
   async (req: Request, res: Response) => {
-    const record = await prisma.academyNominations.update({
+    const record = await prisma.education.update({
+      where: {
+        id: req.params.id,
+      },
+      data: req.body,
+    });
+    res.json(record);
+  },
+);
+
+router.patch(
+  '/academy/:id',
+  check('academySelectFirst', 'At least one academy needs to be selected').exists(),
+  check('academySelectionPreviouslyWhen').toDate().isDate().withMessage('"When" should be a date'),
+  check('yearCompleted').toInt().isNumeric().withMessage('college years completed should be numeric'),
+  check('employedHoursAfterSchool').toInt().isNumeric().withMessage('after school hours should be numeric'),
+  check('employedHoursDuringSummer').toInt().isNumeric().withMessage('summer employment hours shoudl be numeric'),
+  async (req: Request, res: Response) => {
+    const record = await prisma.academies.update({
       where: {
         id: req.params.id,
       },

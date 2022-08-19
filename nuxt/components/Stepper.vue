@@ -8,24 +8,30 @@
       <v-divider></v-divider>
 
       <v-stepper-step step="2" :complete="step > 2">
-        Education
+        Contact
       </v-stepper-step>
 
       <v-divider></v-divider>
 
       <v-stepper-step step="3" :complete="step > 3">
-        Academies Selection
+        Education
       </v-stepper-step>
 
       <v-divider></v-divider>
 
       <v-stepper-step step="4" :complete="step > 4">
-        Documents
+        Academies Selection
       </v-stepper-step>
 
       <v-divider></v-divider>
 
       <v-stepper-step step="5" :complete="step > 5">
+        Documents
+      </v-stepper-step>
+
+      <v-divider></v-divider>
+
+      <v-stepper-step step="6" :complete="step > 6">
         Referrals
       </v-stepper-step>
     </v-stepper-header>
