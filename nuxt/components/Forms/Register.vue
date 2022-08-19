@@ -83,11 +83,7 @@
       </v-container>
     </v-form>
     <v-container style="max-width:600px" v-if="step === 2">
-      <v-alert 
-      border="top"
-      colored-border
-      type="info"
-      elevation="2" class="text-center mt-10">
+      <v-alert border="top" colored-border type="info" elevation="2" class="text-center mt-10">
         <div class="h3">Check your email for an unique application link.</div>
         <div>Click the link in your email to continue your application.</div>
       </v-alert>
