@@ -7,80 +7,97 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model AcademyNominations {
-  id                                String                                   @id @default("") @db.VarChar(255)
-  email                             String                                   @unique(map: "EmailUnique") @default("") @db.VarChar(255)
-  firstName                         String?                                  @db.VarChar(50)
-  middleName                        String?                                  @db.VarChar(50)
-  lastName                          String?                                  @db.VarChar(50)
-  birthDate                         DateTime?                                @db.Date
-  birthPlace                        String?                                  @db.VarChar(255)
-  fatherName                        String?                                  @db.VarChar(100)
-  fatherOccupation                  String?                                  @db.VarChar(255)
-  motherName                        String?                                  @db.VarChar(100)
-  motherOccupation                  String?                                  @db.VarChar(255)
-  addressStreet                     String?                                  @db.VarChar(255)
-  addressCity                       String?                                  @db.VarChar(255)
-  addressState                      String?                                  @db.VarChar(2)
-  addressZip                        String?                                  @db.VarChar(5)
-  addressPhone                      String?                                  @db.VarChar(50)
-  tempStreet                        String?                                  @db.VarChar(255)
-  tempCity                          String?                                  @db.VarChar(255)
-  tempState                         String?                                  @db.VarChar(2)
-  tempZip                           String?                                  @db.VarChar(5)
-  tempPhone                         String?                                  @db.VarChar(50)
-  tempValidUntil                    String?                                  @db.VarChar(255)
-  highSchool                        String?                                  @db.VarChar(255)
-  yearOfGraduation                  Int?
-  college                           String?                                  @db.VarChar(255)
-  yearsCompleted                    Int?
-  extraActivitiesDescription        String?                                  @db.Text
-  athleticDescription               String?                                  @db.Text
-  employedWhere                     String?                                  @db.VarChar(255)
-  employedHoursAfterSchool          Int?
-  employedHoursDuringSummer         Int?
-  academySelectFirst                AcademyNominations_academySelectFirst?
-  academySelectSecond               AcademyNominations_academySelectSecond?
-  academySelectThird                AcademyNominations_academySelectThird?
-  academySelectFourth               AcademyNominations_academySelectFourth?
-  academySelectionElsewhere         String?                                  @db.VarChar(255)
-  academySelectionPreviousElsewhere String?                                  @db.VarChar(255)
-  academySelectionPreviouslyWhen    String?                                  @db.VarChar(50)
-  permissionMedia                   Boolean?
-  recommendationOption              AcademyNominations_recommendationOption?
-  createdAt                         DateTime                                 @default(now()) @db.DateTime(0)
-  updatedAt                         DateTime                                 @default(now()) @db.DateTime(0)
-  submittedAt                       DateTime?                                @db.DateTime(0)
-}
-
-model Applications {
-  id         Int          @id @default(autoincrement()) @db.UnsignedInt
-  uac        String       @default("") @db.VarChar(13)
-  References References[]
-}
-
-model Recommendations {
-  id Int @id @default(autoincrement()) @db.UnsignedInt
-}
-
 model References {
-  id             Int          @id @default(autoincrement()) @db.UnsignedInt
-  application    Int          @db.UnsignedInt
-  onefirstName   String       @default("") @db.VarChar(255)
-  oneLastName    String       @default("") @db.VarChar(255)
-  oneEmail       String       @default("") @db.VarChar(255)
-  twoFirstName   String       @default("") @db.VarChar(255)
-  twoLastName    String       @default("") @db.VarChar(255)
-  twoEmail       String       @default("") @db.VarChar(255)
-  threeFirstName String       @default("") @db.VarChar(255)
-  threeLastName  String       @default("") @db.VarChar(255)
-  threeEmail     String       @default("") @db.VarChar(255)
-  Applications   Applications @relation(fields: [application], references: [id], onUpdate: Restrict, map: "References_ibfk_1")
-
-  @@index([application], map: "application")
+  id             String            @id @default("") @db.VarChar(255)
+  option         References_option
+  onefirstName   String?           @default("") @db.VarChar(255)
+  oneLastName    String?           @default("") @db.VarChar(255)
+  oneEmail       String?           @default("") @db.VarChar(255)
+  twoFirstName   String?           @default("") @db.VarChar(255)
+  twoLastName    String?           @default("") @db.VarChar(255)
+  twoEmail       String?           @default("") @db.VarChar(255)
+  threeFirstName String?           @default("") @db.VarChar(255)
+  threeLastName  String?           @default("") @db.VarChar(255)
+  threeEmail     String?           @default("") @db.VarChar(255)
+  Application    Application       @relation(fields: [id], references: [id], onDelete: Cascade, map: "References_ibfk_1")
 }
 
-enum AcademyNominations_academySelectFirst {
+model Academies {
+  id              String            @id @default("") @db.VarChar(255)
+  first           Academies_first
+  second          Academies_second?
+  third           Academies_third?
+  fourth          Academies_fourth?
+  elsewhere       String?           @db.VarChar(255)
+  previouslyWhere String?           @db.VarChar(255)
+  previouslyWhen  String?           @db.VarChar(255)
+  updatedAt       DateTime?         @default(now()) @db.DateTime(0)
+  Application     Application       @relation(fields: [id], references: [id], onDelete: Cascade, map: "Academies_ibfk_1")
+}
+
+model Application {
+  id                   String                            @id @default("") @db.VarChar(255)
+  email                String                            @unique(map: "EmailUnique") @default("") @db.VarChar(255)
+  permissionMedia      Boolean                           @default(false)
+  recommendationOption Application_recommendationOption?
+  createdAt            DateTime                          @default(now()) @db.DateTime(0)
+  updatedAt            DateTime                          @default(now()) @db.DateTime(0)
+  submittedAt          DateTime?                         @db.DateTime(0)
+  Academies            Academies?
+  Contact              Contact?
+  Education            Education?
+  Personal             Personal?
+  References           References?
+}
+
+model Contact {
+  id          String      @id @default("") @db.VarChar(255)
+  street      String      @default("") @db.VarChar(255)
+  city        String      @default("") @db.VarChar(255)
+  state       String      @default("") @db.VarChar(255)
+  zip         String      @default("") @db.VarChar(255)
+  phone       String      @default("") @db.VarChar(255)
+  tempStreet  String      @default("") @db.VarChar(255)
+  tempCity    String?     @default("") @db.VarChar(255)
+  tempState   String?     @default("") @db.VarChar(255)
+  tempZip     String?     @default("") @db.VarChar(255)
+  tempPhone   String?     @default("") @db.VarChar(255)
+  tempDate    DateTime?   @db.Date
+  updatedAt   DateTime    @default(now()) @db.DateTime(0)
+  Application Application @relation(fields: [id], references: [id], onDelete: Cascade, map: "Contact_ibfk_1")
+}
+
+model Education {
+  id                    String      @id @default("") @db.VarChar(255)
+  highSchool            String      @default("") @db.VarChar(255)
+  graduationYear        Int
+  college               String?     @db.VarChar(255)
+  collegeYears          Int?
+  activitiesDescription String?     @db.Text
+  athleticsDescription  String?     @db.Text
+  employment            String?     @db.VarChar(255)
+  employmentHoursSchool Int?
+  employmentHoursSummer Int?
+  updatedAt             DateTime    @default(now()) @db.DateTime(0)
+  Application           Application @relation(fields: [id], references: [id], onDelete: Cascade, map: "Education_ibfk_1")
+}
+
+model Personal {
+  id               String      @id @default("") @db.VarChar(255)
+  firstName        String      @default("") @db.VarChar(255)
+  middleName       String      @default("") @db.VarChar(255)
+  lastName         String      @default("") @db.VarChar(255)
+  birthDate        DateTime    @db.Date
+  birthPlace       String      @default("") @db.VarChar(255)
+  fatherName       String?     @db.VarChar(255)
+  fatherOccupation String?     @db.VarChar(255)
+  motherName       String?     @db.VarChar(255)
+  motherOccupation String?     @db.VarChar(255)
+  updatedAt        DateTime    @default(now()) @db.DateTime(0)
+  Application      Application @relation(fields: [id], references: [id], onDelete: Cascade, map: "Personal_ibfk_1")
+}
+
+enum Academies_first {
   AIR_FORCE       @map("AIR FORCE")
   MILITARY
   MERCHANT_MARINE @map("MERCHANT MARINE")
@@ -88,29 +105,35 @@ enum AcademyNominations_academySelectFirst {
   NULL
 }
 
-enum AcademyNominations_academySelectSecond {
-  AIR_FORCE       @map("AIR FORCE")
-  MILITARY
-  MERCHANT_MARINE @map("MERCHANT MARINE")
-  NAVAL
-}
-
-enum AcademyNominations_academySelectThird {
-  AIR_FORCE       @map("AIR FORCE")
-  MILITARY
-  MERCHANT_MARINE @map("MERCHANT MARINE")
-  NAVAL
-}
-
-enum AcademyNominations_academySelectFourth {
-  AIR_FORCE       @map("AIR FORCE")
-  MILITARY
-  MERCHANT_MARINE @map("MERCHANT MARINE")
-  NAVAL
-}
-
-enum AcademyNominations_recommendationOption {
+enum References_option {
   ATTACHED
   NEEDED
   NULL
+}
+
+enum Academies_second {
+  AIR_FORCE       @map("AIR FORCE")
+  MILITARY
+  MERCHANT_MARINE @map("MERCHANT MARINE")
+  NAVAL
+}
+
+enum Academies_third {
+  AIR_FORCE       @map("AIR FORCE")
+  MILITARY
+  MERCHANT_MARINE @map("MERCHANT MARINE")
+  NAVAL
+}
+
+enum Application_recommendationOption {
+  ATTACHED
+  NEEDED
+  NULL
+}
+
+enum Academies_fourth {
+  AIR_FORCE       @map("AIR FORCE")
+  MILITARY
+  MERCHANT_MARINE @map("MERCHANT MARINE")
+  NAVAL
 }
