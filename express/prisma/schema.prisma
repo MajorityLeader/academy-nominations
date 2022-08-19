@@ -57,7 +57,7 @@ model Contact {
   state       String      @default("") @db.VarChar(255)
   zip         String      @default("") @db.VarChar(255)
   phone       String      @default("") @db.VarChar(255)
-  tempStreet  String      @default("") @db.VarChar(255)
+  tempStreet  String?     @default("") @db.VarChar(255)
   tempCity    String?     @default("") @db.VarChar(255)
   tempState   String?     @default("") @db.VarChar(255)
   tempZip     String?     @default("") @db.VarChar(255)
