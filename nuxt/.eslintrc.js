@@ -4,7 +4,11 @@ module.exports = {
     browser: true,
     node: true
   },
-  extends: ['plugin:nuxt/recommended', 'prettier'],
+  extends: [
+    'plugin:nuxt/recommended',
+    'plugin:prettier/recommended',
+    'prettier'
+  ],
   plugins: [],
   // add your custom rules here
   rules: {}

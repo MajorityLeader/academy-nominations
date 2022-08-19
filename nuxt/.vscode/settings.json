@@ -1,6 +1,7 @@
 {
-  "editor.defaultFormatter": "Vue.volar",
   "editor.formatOnSave": true,
-  "eslint.format.enable": false,
-  "editor.formatOnType": true
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
