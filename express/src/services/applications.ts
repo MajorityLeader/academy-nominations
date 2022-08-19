@@ -50,6 +50,24 @@ router.patch(
   },
 );
 
+router.patch(
+  '/education/:id',
+  check('highSchool', 'first name is required').exists(),
+  check('yearOfGraduation').isNumeric().withMessage('graduation year should be 4 digits'),
+  check('yearCompleted').isNumeric().withMessage('college years completed should be numeric'),
+  check('employedHoursAfterSchool').isNumeric().withMessage('after school hours should be numeric'),
+  check('employedHoursDuringSummer').isNumeric().withMessage('summer employment hours shoudl be numeric'),
+  async (req: Request, res: Response) => {
+    const record = await prisma.academyNominations.update({
+      where: {
+        id: req.params.id,
+      },
+      data: req.body,
+    });
+    res.json(record);
+  },
+);
+
 router.post(
   '/',
   upload.fields([{ name: 'file-recommendation', maxCount: 1 }, { name: 'file-transcript', maxCount: 1 }, { name: 'file-essay', maxCount: 1 }, { name: 'file-photo', maxCount: 1 }]),
