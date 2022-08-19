@@ -119,6 +119,7 @@ export default {
       const data = await this.$axios.$get(
         `/api/personal/${this.$route.query.a}`
       )
+      if (!data) return
       data.birthDate = data.birthDate
         ? dayjs(data.birthDate).format('MM-DD-YYYY')
         : null

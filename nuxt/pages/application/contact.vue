@@ -126,17 +126,15 @@ export default {
   async mounted() {
     try {
       const data = await this.$axios.$get(
-        `/api/personal/${this.$route.query.a}`
+        `/api/contact/${this.$route.query.a}`
       )
-      data.birthDate = data.birthDate
-        ? dayjs(data.birthDate).format('MM-DD-YYYY')
-        : null
-      data.tempValidUntil = data.tempValidUntil
-        ? dayjs(data.tempValidUntil).format('MM-DD-YYYY')
+      if (!data) return;
+      data.tempDate = data.tempDate
+        ? dayjs(data.tempDate).format('MM-DD-YYYY')
         : null
       this.form = data
     } catch (e) {
-      if (e.response.status === 404) {
+      if (e.response && e.response.status === 404) {
         // Do nothing and use form default values
         console.clear()
       } else {
@@ -150,7 +148,7 @@ export default {
     },
     async save() {
       await this.$axios.$patch(
-        `/api/personal/${this.$route.query.a}`,
+        `/api/contact/${this.$route.query.a}`,
         this.form
       )
     },

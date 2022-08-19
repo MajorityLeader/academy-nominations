@@ -2,7 +2,7 @@
   <div>
     <v-form ref="form" @submit.prevent="submitForm">
       <v-container>
-        <Stepper :step="2"></Stepper>
+        <Stepper :step="3"></Stepper>
         <v-card class="mb-10">
           <v-card-title>
             <v-avatar color="primary" class="mr-5" dark size="20">
@@ -212,7 +212,7 @@ export default {
   },
   methods: {
     async back() {
-      this.$router.replace(`/application/personal?a=${this.$route.query.a}`)
+      this.$router.replace(`/application/contact?a=${this.$route.query.a}`)
     },
     async save() {
       await this.$axios.$patch(

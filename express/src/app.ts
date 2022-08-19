@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 
 import applications from './services/applications';
+import contact from './services/contact';
 import personal from './services/personal';
 import register from './services/register.post';
 
@@ -16,6 +17,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/applications', applications);
+app.use('/contact', contact);
 app.use('/personal', personal);
 app.use('/register', register);
 
