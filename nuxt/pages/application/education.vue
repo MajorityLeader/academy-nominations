@@ -230,8 +230,7 @@ export default ({
   },
   methods: {
     async back() {
-      await this.$axios.$patch(`/api/applications/education/${this.$route.query.a}`, this.form)
-      this.$router.replace(`/personal?a=${this.$route.query.a}`)
+      this.$router.replace(`/application/personal?a=${this.$route.query.a}`)
     },
     async save() {
       await this.$axios.$patch(`/api/applications/education/${this.$route.query.a}`, this.form)

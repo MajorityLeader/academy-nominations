@@ -132,7 +132,6 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-btn @click="back" large outlined color="primary">Back</v-btn>
             <v-spacer></v-spacer>
             <v-btn @click="save" large outlined color="primary">Save</v-btn>
             <v-btn id="submitButton" type="submit" :loading="loading" large class="primary">Next</v-btn>
